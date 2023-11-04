@@ -1,3 +1,4 @@
+import 'package:assistant/screens/assistant.dart';
 import 'package:assistant/screens/register.dart';
 import 'package:flutter/material.dart';
 
@@ -50,7 +51,10 @@ class LoginPage extends StatelessWidget {
               SizedBox(height: 20.0),
               ElevatedButton(
                 onPressed: () {
-                  // Action when 'Login' button is pressed
+                   Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => AssistantScreen()),
+                  );
                 },
                 child: Text('Login'), // Text on the button
                 style: ElevatedButton.styleFrom(

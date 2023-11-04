@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: ProfilePage(), // This sets AssistantScreen as the home screen.
+      home: LoginPage(), // This sets AssistantScreen as the home screen.
     );
   }
 }
