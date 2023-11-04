@@ -1,3 +1,4 @@
+import 'package:assistant/screens/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -55,35 +56,53 @@ class _AssistantScreenState extends State<AssistantScreen> {
     );
   }
 
-  Widget _buildMessageBubble({required String message, required bool isUser}) {
-    return Align(
-      alignment: isUser ? Alignment.centerRight : Alignment.centerLeft,
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 16.0),
-        margin: const EdgeInsets.symmetric(vertical: 4.0),
-        decoration: BoxDecoration(
-          color: isUser ? Colors.blue : Colors.grey[850],
-          borderRadius: BorderRadius.circular(20.0),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Flexible(
-              child: Text(
-                message,
-                style: TextStyle(color: Colors.white),
-              ),
+Widget _buildMessageBubble({required String message, required bool isUser}) {
+  return Row(
+    mainAxisAlignment: isUser ? MainAxisAlignment.end : MainAxisAlignment.start,
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: <Widget>[
+      if (!isUser)
+        GestureDetector(
+          onTap: () {
+            // This is where the navigation happens
+            Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => ProfilePage(), // Assuming you have a ProfilePage widget
+            ));
+          },
+          child: Padding(
+            padding: const EdgeInsets.only(right: 8.0),
+            child: CircleAvatar(
+              backgroundImage: NetworkImage('https://via.placeholder.com/150'), // Placeholder image
+              radius: 15.0,
             ),
-            if (!isUser) // Add your conditional rendering for the microphone icon
-              Padding(
-                padding: const EdgeInsets.only(left: 8.0),
-                child: Icon(Icons.mic_none, size: 20.0, color: Colors.white),
-              ),
-          ],
+          ),
+        ),
+      Expanded(
+        child: Align(
+          alignment: isUser ? Alignment.centerRight : Alignment.centerLeft,
+          child: Container(
+            padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 16.0),
+            margin: const EdgeInsets.symmetric(vertical: 4.0),
+            decoration: BoxDecoration(
+              color: isUser ? Colors.blue : Colors.grey[850],
+              borderRadius: BorderRadius.circular(20.0),
+            ),
+            child: Text(
+              message,
+              style: TextStyle(color: Colors.white),
+            ),
+          ),
         ),
       ),
-    );
-  }
+      if (isUser) // Speaker icon for the user's messages
+        Padding(
+          padding: const EdgeInsets.only(left: 8.0),
+          child: Icon(Icons.volume_up, size: 20.0, color: Colors.white),
+        ),
+    ],
+  );
+}
+
 
   Widget _buildBottomBar(BuildContext context) {
     return Container(
